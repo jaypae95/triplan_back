@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var trip_listRouter=require('./routes/trip_list');
 
 var app = express();
 
@@ -16,7 +17,7 @@ app.set('view engine', 'jade');
 app.all('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type,charset=utf-8'); // If needed
   res.header('Access-Control-Allow-Credentials', true); // If needed
   next();
 });
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/trip_list',trip_listRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
