@@ -1,25 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
-
-var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT
-});
-
+var db = require('./db');
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  connection.connect(function(err) {
-    if (err) {
-      console.error('Database connection failed: ' + err.stack);
-      return;
-    }
-    console.log('connected');
+router.get('/', function (req, res, next) {
+  db.query('SELECT * FROM triplan.Continent', function (err, res, fields) {
+    console.log(res);
   });
-  connection.end();
-  res.render('index', { title: 'Express' });
+  res.render('index', {title: 'Express'});
 });
 
 module.exports = router;
