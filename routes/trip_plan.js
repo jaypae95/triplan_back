@@ -12,3 +12,5 @@ router.post('/make_plan',function(req,res){
 router.post('/make_dayplan',function(req,res){
 
 });
+module.exports = router;
+
