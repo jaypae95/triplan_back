@@ -5,6 +5,7 @@ const db = require('./db');
 router.get('/', function (req, res, next) {
 
 });
+/////////////////////여행지리스트
 router.get('/continent/:name',function(req,res){
     db.connection.query("SELECT * FROM triplan.Country WHERE continent_name=?",req.params.name, function (err, r, fields) {
         res.send(r);
