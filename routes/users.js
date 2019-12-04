@@ -26,14 +26,16 @@ router.post('/login', function (req, res, next) {
       const passwordIsValid = bcrypt.compareSync(req.body.user_password, user.user_password);
       if (passwordIsValid) {
         res.send({
-          token: jwtSignUser(user)
+          auth: true,
+          token: jwtSignUser(user),
+          user: user
         });
       } else {
-        res.send('Incorrect PW')
+        res.status(401).send({auth:false, token:null})
       }
     } else {
       console.log('no user')
-      res.send('ID is wrong !')
+      res.status(404).send('No user found.')
     }
   });
 });
