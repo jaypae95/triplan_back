@@ -22,20 +22,20 @@ router.post('/makeplan',function(req,res){
 
 
 });
-// router.post('/completeplan',function(req,res){
-//     const query1="INSERT INTO triplan.DayPlan (plan_id,city_id) VALUES (?,?)"
-//     const query2="INSERT INTO triplan.PlacePlan (dayplan_id,place_id) VALUES (?,?)"
-//     const query3="SELECT dayplan_id FROM triplan.DayPlan WHERE plan_id=? AND city_id=?"
-//     for(var i=0;i<req.body.dayplan.length;i++) {
-//         db.connection.query(query1, [req.body.idPlan, req.body.dayplan[i].city_id]);
-//         var dayplanid;
-//         db.connection.query(query3, [req.body.idPlan,req.body.dayplan[i].city_id], function (err, r) {
-//             dayplanid=r;
-//         });
-//         for(var j=0;j<req.body.dqyplan[i].place_id.length;j++){
-//             db.connection.query(query2, [dqyplanid, req.body.dayplan[i].place_id[j]]);
-//         }
-//     }
-// });
+router.post('/completeplan',function(req,res){
+    const query1="INSERT INTO triplan.DayPlan (plan_id,city_id) VALUES (?,?)"
+    const query2="INSERT INTO triplan.PlacePlan (dayplan_id,place_id) VALUES (?,?)"
+    for(let i=0;i<req.body.dayplan.length;i++) {
+        db.connection.query(query1,[req.body.idPlan, req.body.dayplan[i].city_id],function(err,r){
+            console.log(r.insertId)
+            for(var j=0;j<req.body.dayplan[i].place_id.length;j++){
+                db.connection.query(query2, [r.insertId, req.body.dayplan[i].place_id[j]]);
+            }
+
+        });
+
+
+    }
+});
 module.exports = router;
 
