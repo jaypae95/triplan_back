@@ -14,5 +14,18 @@ router.post('/',function(req,res){
         res.send(r)
     });
 });
+
+router.post('/toggleshare', function(req, res) {
+    const idPlan = req.body.idPlan
+    console.log(idPlan)
+    const query = "UPDATE triplan.Plan SET is_shared=CASE \n" +
+      "WHEN is_shared=0 THEN 1\n" +
+      "WHEN is_shared=1 THEN 0\n" +
+      "END\n" +
+      "WHERE idPlan=?"
+    db.connection.query(query, idPlan, function(err, r){
+        res.send(r)
+    })
+})
 module.exports = router;
 
