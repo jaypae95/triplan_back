@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const db = require('./db');
+const auth = require('./authenticate')
 
 require('dotenv').config();
 
@@ -14,20 +15,6 @@ function jwtSignUser(user) {
   })
 }
 
-function getUser(req, res) {
-  if (req.headers && req.headers.authorization) {
-    let authorization = req.headers.authorization
-    let decoded = ''
-    try {
-      decoded = jwt.verify(authorization, process.env.JWT_SECRET);
-    } catch (e) {
-      return {detail: 'unauthorized'}
-    }
-    return {detail: 'success', user: decoded.data}
-    // Fetch the user by id
-  }
-  return {detail: 'no header'};
-}
 /* GET users listing. */
 router.post('/', function (req, res, next) {
 
@@ -72,7 +59,7 @@ router.post('/overlap', function (req, res, next) {
 });
 
 router.get('/myplan', function (req, res, next) {
-  const result = getUser(req, res)
+  const result = auth.getUser(req, res)
   if(result.detail === 'no header') {
     return res.send(500)
   }
