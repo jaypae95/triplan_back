@@ -68,7 +68,7 @@ router.get('/myplan', function (req, res, next) {
   }
   if(result.detail === 'success') {
     const user = result.user
-    const query="SELECT idPlan,date_format(depart_day,'%Y-%m-%d') as depart_day,date_format(arrive_day, '%Y-%m-%d') as arrive_day,title,c.country_name,is_shared FROM triplan.Plan AS p INNER JOIN triplan.Country AS c ON p.country_id=c.idCountry WHERE userinfo_id=?"
+    const query="SELECT idPlan,date_format(depart_day,'%Y-%m-%d') as depart_day,date_format(arrive_day, '%Y-%m-%d') as arrive_day,title,c.country_name,is_shared FROM triplan.Plan AS p INNER JOIN triplan.Country AS c ON p.country_id=c.idCountry WHERE userinfo_id=? and has_dayplan=1"
     db.connection.query(query, user.idUserInfo, function(err,r){
       res.send(r)
     });
