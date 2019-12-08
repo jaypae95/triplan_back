@@ -47,7 +47,7 @@ router.post('/completeplan',function(req,res){
     const query1="INSERT INTO triplan.DayPlan (plan_id,city_id) VALUES (?,?)"
     const query2="INSERT INTO triplan.PlacePlan (dayplan_id,place_id) VALUES (?,?)"
     const query3="UPDATE triplan.Plan SET has_dayplan=1 WHERE idPlan=?"
-    db.connection.query(query3,req.body.idplan)
+    db.connection.query(query3,req.body.idPlan)
     for(let i=0;i<req.body.dayplan.length;i++) {
         db.connection.query(query1,[req.body.idPlan, req.body.dayplan[i].city_id],function(err,r){
             console.log(r.insertId)
@@ -56,9 +56,8 @@ router.post('/completeplan',function(req,res){
             }
 
         });
-
-
     }
+    res.json({success:true})
 });
 module.exports = router;
 
