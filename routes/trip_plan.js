@@ -37,7 +37,7 @@ router.post('/makeplan',function(req,res){
           })
       }
         db.connection.query("SELECT country_lat,country_long FROM triplan.Country WHERE idCountry=?",req.body.country_id, function(err,r){
-            res.send({idplan:idplan,country_lat:r[0].country_lat,country_long:r[0].country_long});
+            res.send({idPlan:idplan,country_lat:r[0].country_lat,country_long:r[0].country_long});
         });
     })
 
