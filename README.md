@@ -1,6 +1,6 @@
 # TRIPLAN BACK
 
-## in local
+## in local (current working directory -> triplan_back)
 1. cp env_sample .env
 2. npm run dev-node
 
